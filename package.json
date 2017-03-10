@@ -1,5 +1,5 @@
 {
-  "name": "choodo",
+  "name": "template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "budo index.js:bundle.js --live --open -H localhost",
     "build": "browserify index.js -t [ babelify --presets [ es2015 ] ] | uglifyjs > bundle.js",
-    "deploy:upload": "surge ./ choodo.surge.sh",
+    "deploy:upload": "surge ./ template.surge.sh",
     "deploy": "npm run build && npm run deploy:upload"
   },
   "keywords": [],
