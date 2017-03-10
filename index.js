@@ -18,6 +18,11 @@ app.model({
       todos[index] = todo
       return {todos}
     },
+    deleted: (state, index) => {
+      const todos = state.todos.slice()
+      todos.splice(index, 1)
+      return {todos}
+    },
     receiveTodos: (state, data) => ({todos: data})
   },
   effects: {
@@ -39,13 +44,19 @@ app.model({
         send('replaceTodo', {index, todo}, done)
       })
     },
+    deleteTodo: (state, index, send, done) => {
+      const todos = state.todos.slice()
+      store.delete('todos', index, () => {
+        send('deleted', index, done)
+      })
+    }
   }
 })
 
 const view = (state, prev, send) => {
   return html`
     <div onload=${() => send('getTodos')}>
-      <h1>Todo</h1>
+      <h1>Todo (${countNotDone(state.todos)})</h1>
       <form onsubmit=${onSubmit}>
         <input type="text" placeholder="New Item" id="title">
       </form>
@@ -63,10 +74,18 @@ const view = (state, prev, send) => {
 
     const todoEntryDecorated = todo.done ? html`<strike>${todoEntry}</strike>` : todoEntry
 
-    return html`<li>${todoEntryDecorated}</li>`
+    return html`
+    <li>
+      ${todoEntryDecorated}
+      <button onclick=${deleteTodo}>Delete</button>
+    </li>`
 
     function onChange() {
       send('toggle', index)
+    }
+
+    function deleteTodo(e) {
+      send('deleteTodo', index)
     }
   }
 
@@ -84,3 +103,9 @@ app.router([
 
 const tree = app.start()
 document.body.appendChild(tree)
+
+function countNotDone(todos) {
+  return todos.reduce((acc, val) => {
+    return val.done ? acc : acc+1
+  }, 0)
+}

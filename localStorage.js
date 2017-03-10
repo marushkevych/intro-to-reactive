@@ -20,6 +20,13 @@ const store = {
       window.localStorage[storeName] = JSON.stringify(items)
       cb()
     })
+  },
+  delete: (storeName, index, cb) => {
+    store.getAll(storeName, (items) => {
+      items.splice(index, 1)
+      window.localStorage[storeName] = JSON.stringify(items)
+      cb()
+    })
   }
 }
 
