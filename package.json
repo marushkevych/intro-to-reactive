@@ -1,13 +1,21 @@
 {
-  "name": "template",
+  "name": "rapid-prototyping",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "config": {
+    "domain": "rapid-prototyping.surge.sh",
+    "styles": "scss/styles.scss bundle.css"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "budo index.js:bundle.js --live --open -H localhost",
-    "build": "browserify index.js -t [ babelify --presets [ es2015 ] ] | uglifyjs > bundle.js",
-    "deploy:upload": "surge ./ template.surge.sh",
+    "sass": "node-sass $npm_package_config_styles",
+    "sass:watch": "node-sass -w $npm_package_config_styles",
+    "js": "browserify index.js -t [ babelify --presets [ es2015 ] ] | uglifyjs > bundle.js",
+    "js:watch": "budo index.js:bundle.js --live -H localhost",
+    "start": "npm run sass && parallelshell 'npm run sass:watch' 'npm run js:watch'",
+    "build": "parallelshell 'npm run sass' 'npm run js'",
+    "deploy:upload": "surge ./ $npm_package_config_domain",
     "deploy": "npm run build && npm run deploy:upload"
   },
   "keywords": [],
@@ -21,6 +29,8 @@
     "babelify": "^7.3.0",
     "browserify": "^14.1.0",
     "budo": "^9.4.7",
+    "node-sass": "^4.5.0",
+    "parallelshell": "^2.0.0",
     "uglify-js": "^2.8.11"
   }
 }
