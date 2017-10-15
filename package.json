@@ -11,8 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "sass": "node-sass $npm_package_config_styles",
     "sass:watch": "node-sass -w $npm_package_config_styles",
-    "js": "browserify src/index.js -t [ babelify --presets [ es2015 ] ] | uglifyjs > bundle.js",
-    "js:watch": "budo src/index.js:bundle.js --live -H localhost",
+    "js": "browserify src/index.js -t [ babelify --presets [ env stage-2] ] | uglifyjs > bundle.js",
+    "js:watch": "budo src/index.js:bundle.js --live -H localhost -- -t [ babelify --presets [ env stage-2 ] ]",
     "start": "npm run sass && parallelshell 'npm run sass:watch' 'npm run js:watch'",
     "build": "parallelshell 'npm run sass' 'npm run js'",
     "deploy:upload": "surge ./ $npm_package_config_domain",
@@ -25,7 +25,8 @@
     "choo": "^4.1.0"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-2": "^6.24.1",
     "babelify": "^7.3.0",
     "browserify": "^14.1.0",
     "budo": "^9.4.7",

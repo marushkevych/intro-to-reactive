@@ -13,5 +13,3 @@ replace 'rapid-prototyping' with project name in package.json
 
 run with
 `npm start`
-
-__Note: this doesn't support ES6 modules (yet)__
