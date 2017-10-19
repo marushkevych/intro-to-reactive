@@ -1,10 +1,10 @@
 {
-  "name": "rapid-prototyping",
+  "name": "intro-to-reactive",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "config": {
-    "domain": "rapid-prototyping.surge.sh",
+    "domain": "intro-to-reactive.surge.sh",
     "styles": "scss/styles.scss bundle.css"
   },
   "scripts": {
@@ -22,7 +22,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "choo": "^4.1.0"
+    "rxjs": "^5.5.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.0",

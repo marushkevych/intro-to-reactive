@@ -1,19 +1,23 @@
-const choo = require('choo')
-const html = require('choo/html')
+import Rx from 'rxjs/Rx'
 
-const app = choo()
+var button = document.querySelector('.button')
+var label = document.querySelector('h4')
 
-const view = (state, prev, send) => {
-  return html`
-  <div class='tile'>
-    <h1>Hello World!</h1>
-  </div>
-  `
-}
+var click$= Rx.Observable.fromEvent(button, 'click')
 
-app.router([
-  ['/', view]
-])
+var doubleClick$ = click$
+  .bufferWhen(() => click$.debounceTime(250))
+  .map(arr => arr.length)
+  .filter(len => len === 2);
 
-const tree = app.start()
-document.body.appendChild(tree)
+
+doubleClick$.subscribe(event => {
+  label.textContent = 'double click'
+})
+
+doubleClick$
+  .delay(1000)
+  .subscribe(suggestion => {
+    label.textContent = '-'
+  })
+  

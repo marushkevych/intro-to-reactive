@@ -1,8 +1,20 @@
-@import "vars";
-
-.tile {
-  background-color: $background-color;
-  border: 1px solid $grey-2;
-  margin: 8px;
-  padding: 0 8px 8px 8px;
+body {
+  font-family: sans-serif;
+  padding: 10px;
+}
+.button {
+background: #EcEcEc;
+padding: 5px;
+text-decoration: none;
+color: black;
+border: 1px solid darkgray;
+}
+h4 {
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 20px;
+}
+.header {
+  /*background: #ECECEC;
+  */padding: 5px;
 }
