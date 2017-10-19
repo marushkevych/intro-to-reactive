@@ -1,23 +1,9 @@
 import Rx from 'rxjs/Rx'
+const button = document.querySelector('.button') 
+const request$ = Rx.Observable.fromEvent(button, 'click')
+  .map(e => 'https://api.github.com/users')
 
-var button = document.querySelector('.button')
-var label = document.querySelector('h4')
+const response$ = request$
+  .flatMap(url => Rx.Observable.fromPromise(jQuery.getJSON(url)))
 
-var click$= Rx.Observable.fromEvent(button, 'click')
-
-var doubleClick$ = click$
-  .bufferWhen(() => click$.debounceTime(250))
-  .map(arr => arr.length)
-  .filter(len => len === 2);
-
-
-doubleClick$.subscribe(event => {
-  label.textContent = 'double click'
-})
-
-doubleClick$
-  .delay(1000)
-  .subscribe(suggestion => {
-    label.textContent = '-'
-  })
-  
+response$.subscribe(json => console.log(json))
